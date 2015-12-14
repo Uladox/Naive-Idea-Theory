@@ -12,7 +12,7 @@
   there is a natural tendency for certain things to form from what is
   given. Still chemical reactions need a certain environment in order
   to work, any cell biologist will tell you that things such as
-  temperature and pH can cause many reactions to fail. Added to that
+  temperature and pH can cause many reactions to fail. Added to that,
   enzymes can encourage reactions (such as by speeding them up) and be
   stopped by inhibitors. These enzymes, solution, and inhibitors might
   be thought of as a "context" of sorts. Here the view is that "ideas"
