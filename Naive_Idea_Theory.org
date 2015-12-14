@@ -1,8 +1,27 @@
-#+STARTUP: entities pretty
-#+STARTUP: latexpreview
+#+AUTHOR: Uladox
+#+EMAIL: uladox@tuta.io
+#+TITLE: Naive Idea Theory
+#+STARTUP: latexpreview inlineimages entitiespretty
 
-[[elisp:(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.25))][Reasonable scale for org mode readers.]]
-
+[[./ampersand.png]]
+* Introduction
+  There are many approaches to artificial intelligence. Each one has
+  its distinct advantages and disadvantages. The approach in this
+  theory is no exception to this rule. The approach taken here is that
+  "thinking machines" should be similar to chemical reactions where
+  there is a natural tendency for certain things to form from what is
+  given. Still chemical reactions need a certain environment in order
+  to work, any cell biologist will tell you that things such as
+  temperature and pH can cause many reactions to fail. Added to that
+  enzymes can encourage reactions (such as by speeding them up) and be
+  stopped by inhibitors. These enzymes, solution, and inhibitors might
+  be thought of as a "context" of sorts. Here the view is that "ideas"
+  take on a "natural" composition with the help or discouragement of
+  the "context."
+* For viewing in an org file
+  Ignore this part if you are reading this in a html document, pdf
+  document, or any other document that does not end with ".org"
+  - [[elisp:(setq org-format-latex-options (plist-put org-format-latex-options :scale 1.25))][Reasonable scale for org mode readers.]]
 * License
   Copyright (c)  Uladox.
   Permission is granted to copy, distribute and/or modify this document
@@ -14,38 +33,49 @@
   included at the bottom of this document.
 * Basic Naive Idea Theory.
 ** The $:$ indicator
-   denotes that the word after it is a property.
-*** Example
-    $:held$ is the property that something can be held.
+   Denotes that the word after it is a property.
+*** Examples
+    A baseball might have properties such as:
+    - $:held$, the property that something can be held.
+    - $:thrown$, the property that something can be thrown.
+    - $:caught$, the property that something can be caught.
 ** The $\Rightarrow$ relation
-   denotes for \(A \Rightarrow P\), $P$ is a property of $A$. Also
+   Denotes for \(A \Rightarrow P\), $P$ is a property of $A$. Also it
    might appear in a set such as \(A = \{ \Rightarrow P \}\) in order
    to denote that the set $A$ has the property $P$.
 *** Example:
-    \(A \Rightarrow :held\) can be read as $A$ can be held.
+    \(Baseball \Rightarrow :held\) can be read as a baseball can be
+    held.
 *** Expanded:
     If a set theory approach is chosen, 
     \(A \Rightarrow P\) might be read as 
     \((P \in A) \vee (P~is~a~property)\)
 ** The $\Leftarrow$ relation
-   denotes for \(P \Leftarrow A,~A~fills~in~the~property~P\). Also it
+   Denotes for \(P \Leftarrow A,~A~fills~in~the~property~P\). Also it
    might appear in a set such as \(B = \{ P \Leftarrow none \}\) or
    \(B = \{ P \Leftarrow \}\) to denote that $B$ can have a property
    but does not.
 *** Example:
     \(S = \{ :holds \Leftarrow spear \}\) can be read as \(S~holds~a~spear.\)
 ** The $\tau$ function
-   is such that with \(\tau(A, B) = \) if $B$ has a property that $A$
-   is compatible with it then add $B$ to $A$, otherwise just $A$.
+   Is defined such that 
+   - \(\tau(A, B) =\) if $B$ has a property that $A$ is compatible
+     with, then fill in said property of $A$ with $B$, otherwise just
+     $A$.
 *** Example:
-     - \(person = \{ (:holds,  none) \}~or~\{ :holds \Leftarrow none \}\)
+     - \(person = \{ :holds \Leftarrow  \}\)
      - \(spear \Rightarrow :held\)
-     - \(\tau(person, spear) = \{ (:holds, spear) \}\ or\ \{ :holds \Leftarrow spear \}\)
+     - \(\tau(person, spear) = \{ :holds \Leftarrow spear \}\)
+*** Expanded
+    \(\tau(A, B) = 
+    \{ if~\exists_{P_A}
+    (a = (P_A \Leftarrow)) \vee (B \Rightarrow P_A) 
+    ~then~(P_A \Leftarrow B)~else~a~ | \forall a \in A \}\)
 ** The $\theta$ function
    is such that it exhaustively goes over a set or some other
-   structure that can contain things and applies \tau to all pairs in
+   structure that can contain things and applies $\tau$ to all pairs in
    the structure. The $\theta$ function has a complexity of at least
-   $O(n^2)$
+   $O(n^2)$.
 *** Example:
 **** For org mode readers:					   :noexport:
       - \( \\
@@ -54,7 +84,7 @@
         ~~~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow none \}~\}) = \\
         \{~\{ :name \Leftarrow Bob,   :holds \Leftarrow spear \}, \\
         ~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow spear \}~\}\)
-**** For htm/web-browser readers:
+**** For html/web-browser/pdf readers:
       - \(\theta(\{~spear \Rightarrow :held,\) \\
         \(~~~~~~\{ :name \Leftarrow Bob, :holds \Leftarrow none \},\) \\
         \(~~~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow none \}~\}) =\) \\
@@ -115,7 +145,7 @@
        ~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
        \Leftarrow :holds, Robe \Leftarrow :wears \}~\}\)
      - (Notice the last elements of the sets being the difference)
-**** For html/web-browser readers:
+**** For html/web-browser/pdf readers:
      - \(Scythe = \{ :name \Leftarrow Scythe, \Rightarrow :held \}\)
      - \(Skeleton = \{ :name \Leftarrow Skeleton, \Rightarrow :body,
        \Leftarrow :holds, \Leftarrow :wears \}\)
@@ -151,7 +181,7 @@
      - (Notice the last elements of the sets being the difference)
 ** The $\odot$ function
    computes for the simplest "thinking machine" in Basic Naive Idea
-   Theory that takes in triple of the "focus", "parts", and
+   Theory. It that takes in a triple of the "focus", "parts", and
    "restrictions" and returns a triple with the same value for "parts"
    and "restrictions", but the "focus" is different. It is easily
    defined as \(\odot(f, p, r) = (\oplus(r, \theta(f \cup p)), p,
@@ -163,12 +193,12 @@
     and "parts" changed in order to deal with different contexts. 
 *** The many many problems still in place
     - There is a very high computational complexity (at least
-      $O(|f \cup p|r)$ which is unreasonable for any moderate size of
+      $O(|f \cup p||r|)$ which is unreasonable for any moderate size of
       $f$, $p$, or $r$).
     - The "thinking machine" still has to be told what to "think" ($f$
       and $p$) and how to "think" ($r$ and $p$).
     - There a lack of the natural tendency of a "fuzzy" or numeric
-      amount of how much an idea is liked with it instead either
+      amount of how much an idea is liked, with it instead either
       getting thrown out or kept.
     - No way to learn about new properties.
     - No way to learn about the relationships between properties or
