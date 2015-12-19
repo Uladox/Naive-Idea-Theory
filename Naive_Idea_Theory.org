@@ -1,8 +1,16 @@
-#+AUTHOR: Uladox
-#+EMAIL: uladox@tuta.io
-#+TITLE: Naive Idea Theory
+#+OPTIONS: toc:nil author:nil date:nil
+#+OPTIONS: title:nil
+#+BIND: org-latex-title-command ""
 #+STARTUP: latexpreview inlineimages entitiespretty
-
+#+TITLE:
+  [[./frontpage.png]]
+#+Latex: \newpage
+#+Latex: \title{Emacs as a Latex Editor}
+#+Latex: \author{Uladox}
+#+Latex: \date{\today}
+#+Latex: \maketitle
+#+TOC: headlines 2
+#+Latex: \newpage
 [[./ampersand.png]]
 * Introduction
   There are many approaches to artificial intelligence. Each one has
@@ -71,6 +79,16 @@
     \{ if~\exists_{P_A}
     (a = (P_A \Leftarrow)) \vee (B \Rightarrow P_A) 
     ~then~(P_A \Leftarrow B)~else~a~ | \forall a \in A \}\)
+    or, on several lines
+    \begin{equation} 
+    \tau(A,B)= \left.\left.
+    \begin{cases}
+    (P_A \Leftarrow B) &\mbox{if } \exists_{P_A} ( a = (P_A \Leftarrow)) \vee (B \Rightarrow P_A)\\
+    a &\mbox{else }
+    \end{cases}
+    \right\vert\forall a \in A
+    \right\}
+    \end{equation}
 ** The $\theta$ function
    is such that it exhaustively goes over a set or some other
    structure that can contain things and applies $\tau$ to all pairs in
@@ -204,6 +222,65 @@
     - No way to learn about the relationships between properties or
       and other properties or "prototypes" of properties.
     - No personality.
+* Anti-clock Naive Idea Theory
+  [[./clock.png]]
+** Some rambling
+*** It's about time!
+    - There's a time and place for everything.
+    - It's time to get going.
+    - I don't have that kind of time.
+    - Talk about timing.
+    - Where has the time gone?
+    - The best and worst of times.
+    - Ahead of their time.
+    - Time goes by fast when you're having fun.
+    - The seconds dragged on...
+    - All good things come to an end.
+*** What we mean by time
+    Do not take anything here absolutely seriously, it is a
+    metaphor. The type of time we plan to deal with is not the time
+    we deal with in physics problems, but more like the time of an
+    internal clock telling you what needs to be done.
+*** When is the time right?
+    How do we know when it is a time to sleep, a time to eat, a time to
+    cry, a time to know, a time to pretend, a time to sigh, a time to
+    read, a time finish what must be done, and a time to give up?
+*** Rephrasing the problem
+    Say $U_t$ is the set of all times (it is denoted as $U_t$ because if
+    we are dealing with a system of times, it would be the universe of
+    discourse). So how would we map from this set at any given moment
+    to a specific time? We could image a 12 hour clock[1] as a mapping
+    from a subset of $U_t$ containing twelve times to a single one of
+    those. So what determines what time evaluated form this mapping?
+    Well, time. That is confusing, so we will denote this time that
+    influences the result of the mapping as a member of the set of
+    $U_T$. With this in place a clock might be represented as 
+    - A triple $(f, S_t,T_1)$, with $S_t \subseteq U_t$, $T_1 \in U_T$ and
+      a function $f$ that takes in the triple and returns a pair
+      containing a triple that can be reused with $f$ and a time $t$. 
+    - Such that $f((f,S_t,T_1)) = ((f,S_t,T_2),t)$ with $T_2 \in U_T$ and $t
+      \in S_t$.
+    \begin{align}
+    E_0 &= mc^2                              \\
+    E &= \frac{mc^2}{\sqrt{1-\frac{v^2}{c^2}}}
+    \end{align}
+** From sets to times
+   The domain of discourse, also called the universe of discourse,
+   universal set, or simply universe, is the set of entities over
+   which certain variables of interest in some formal treatment may
+   range. If we let $U_c$ represent the universe of discourse for all
+   times, $U_c$ would probably impossible to represent in any
+   meaningful fashion. This is because as a culture changes and
+   evolves what there is time for changes, once there was a time for
+   human sacrifices, now there is a time for programming. $U_c$
+   therefore must either evolve.
+** The anti-clock
+   How do we know what it is a time for? Clocks tell what time is, so
+   we will call something that tells time what it is the anti-clock.
+** Some sum-clocks
+   If every anti-clocked told the universal clock what it was a time
+   for then the universal clock for any reasonably complex system
+   would be 
 * License (GNU Free Documentation License, Version 1.3)
 
                 GNU Free Documentation License
@@ -656,3 +733,15 @@ If your document contains nontrivial examples of program code, we
 recommend releasing these examples in parallel under your choice of
 free software license, such as the GNU General Public License,
 to permit their use in free software.
+
+* Footnotes
+
+[1] 
+  I know, it tells a different definition of time then what we are
+  working with, but pretend that instead of hours and a constant
+  increment of time we are dealing with some arbitrary set of times
+  and some other mechanism for changing from one to the next.
+
+\begin{equation}
+  \left.\frac{\frac{1}{x}}{\frac{5}{1+\frac{x}{7}}}\right\vert_{-5}^{17}
+\end{equation}
