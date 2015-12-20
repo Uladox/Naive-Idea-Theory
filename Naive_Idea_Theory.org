@@ -2,6 +2,7 @@
 #+OPTIONS: title:nil
 #+BIND: org-latex-title-command ""
 #+STARTUP: latexpreview inlineimages entitiespretty
+#+LATEX_HEADER: \usepackage{tikz} 
 #+TITLE:
   [[./frontpage.png]]
 #+Latex: \newpage
@@ -68,8 +69,8 @@
 ** The $\tau$ function
    Is defined such that 
    - \(\tau(A, B) =\) if $B$ has a property that $A$ is compatible
-     with, then fill in said property of $A$ with $B$, otherwise just
-     $A$.
+     with, then fill in said property of $A$ with $B$, otherwise
+     return the empty set.
 *** Example:
      - \(person = \{ :holds \Leftarrow  \}\)
      - \(spear \Rightarrow :held\)
@@ -78,36 +79,40 @@
     \(\tau(A, B) = 
     \{ if~\exists_{P_A}
     (a = (P_A \Leftarrow)) \vee (B \Rightarrow P_A) 
-    ~then~(P_A \Leftarrow B)~else~a~ | \forall a \in A \}\)
+    ~then~(P_A \Leftarrow B)~else~\emptyset~ | \forall a \in A \}\)
+
     or, on several lines
-    \begin{equation} 
+
+    \begin{equation*} 
     \tau(A,B)= \left.\left.
     \begin{cases}
     (P_A \Leftarrow B) &\mbox{if } \exists_{P_A} ( a = (P_A \Leftarrow)) \vee (B \Rightarrow P_A)\\
-    a &\mbox{else }
+    \emptyset &\mbox{otherwise }
     \end{cases}
     \right\vert\forall a \in A
     \right\}
-    \end{equation}
+    \end{equation*}
 ** The $\theta$ function
    is such that it exhaustively goes over a set or some other
    structure that can contain things and applies $\tau$ to all pairs in
    the structure. The $\theta$ function has a complexity of at least
    $O(n^2)$.
 *** Example:
-**** For org mode readers:					   :noexport:
-      - \( \\
-        \theta(\{~spear \Rightarrow :held, \\
-        ~~~~~~\{ :name \Leftarrow Bob, :holds \Leftarrow none \}, \\
-        ~~~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow none \}~\}) = \\
-        \{~\{ :name \Leftarrow Bob,   :holds \Leftarrow spear \}, \\
-        ~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow spear \}~\}\)
-**** For html/web-browser/pdf readers:
-      - \(\theta(\{~spear \Rightarrow :held,\) \\
-        \(~~~~~~\{ :name \Leftarrow Bob, :holds \Leftarrow none \},\) \\
-        \(~~~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow none \}~\}) =\) \\
-        \(\{~\{ :name \Leftarrow Bob,   :holds \Leftarrow spear \},\) \\
-        \(~~~~\{ :name \Leftarrow Alyce, :holds \Leftarrow spear \}~\}\)
+    \begin{equation*}
+    \theta\left(\left.
+    \begin{cases}
+    spear \Rightarrow :held, \\
+    \{:name \Leftarrow Bob,:holds \Leftarrow\}, \\
+    \{:name \Leftarrow Alyce,:holds \Leftarrow\}
+    \end{cases}
+    \right\}\right)=
+    \left.
+    \begin{cases}
+    \{:name \Leftarrow Bob,:holds \Leftarrow spear\}, \\
+    \{:name \Leftarrow Alyce,:holds \Leftarrow spear\} \\
+    \end{cases}
+    \right\}
+    \end{equation*}
 *** Expanded:
 **** In set theory with logic:
      \(\theta(S) = \{ \tau(A, B)~|~\forall{}a,b \in S \} \)
@@ -127,83 +132,53 @@
      number of elements of elements in the "restriction set" and
      $n_{2}$ is the number of elements in the "focus" set.
 *** Example
-**** For org mode readers:					   :noexport:
-     - \(Scythe = \{ :name \Leftarrow Scythe, \Rightarrow :held \}\)
-     - \(Skeleton = \{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, \Leftarrow :wears \}\)
-     - \(Rat = \{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, \Leftarrow :wears \}\)
-     - \(Robe = \{ :name \Leftarrow Robe, \Rightarrow :worn,
-       \Leftarrow :holds \}\)
-     - Therefore 
-     - \(\\
-       \theta(\{ Scythe, Skeleton, Rat, Robe \}) = \\
-       \{~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Robe, \Rightarrow :worn,
-       Scythe \Leftarrow :holds \}~\}\)
-     - So if we only want to rule out clothing holding holding things
-       so, which might not make much sense in a hypothetical context or
-       not be worth considering
-       \(\\
-       \oplus(\{ :worn \Leftarrow :holds \}, 
-       \theta(\{ Scythe, Skeleton, Rat, Robe \})) = \\
-       \{~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \}, \\
-       ~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \}~\}\)
-     - (Notice the last elements of the sets being the difference)
-**** For html/web-browser/pdf readers:
-     - \(Scythe = \{ :name \Leftarrow Scythe, \Rightarrow :held \}\)
-     - \(Skeleton = \{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, \Leftarrow :wears \}\)
-     - \(Rat = \{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, \Leftarrow :wears \}\)
-     - \(Robe = \{ :name \Leftarrow Robe, \Rightarrow :worn,
-       \Leftarrow :holds \}\)
-     - Therefore 
-     - \(\theta(\{ Scythe, Skeleton, Rat, Robe \}) =\) \\
-       \(\{~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Robe, \Rightarrow :worn,
-       Scythe \Leftarrow :holds \}~\}\)
-     - So if we only want to rule out clothing holding holding things
-       so, which might not make much sense in a hypothetical context or
-       not be worth considering
-     - \(\oplus(\{ :worn \Leftarrow :holds \},\)
-       \(\theta(\{ Scythe, Skeleton, Rat, Robe \}) =\) \\
-       \(\{~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Skeleton, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       Scythe \Leftarrow :holds, \Leftarrow :wears \},\) \\
-       \(~~~~\{ :name \Leftarrow Rat, \Rightarrow :body,
-       \Leftarrow :holds, Robe \Leftarrow :wears \}~\}\)
+    - With
+      \begin{equation*}
+      \begin{array}{lcl}
+      Scythe &=& \{:name \Leftarrow Scythe, \Rightarrow :held\} \\
+      Skeleton &=& \{:name \Leftarrow Skeleton, \Rightarrow :body,\Leftarrow :holds,\Leftarrow :wears\} \\
+      Rat &=& \{:name \Leftarrow Rat,\Rightarrow :body,\Leftarrow :holds, \Leftarrow :wears\} \\
+      Robe &=& \{:name \Leftarrow Robe,\Rightarrow :worn,\Leftarrow :holds\}
+      \end{array}
+      \end{equation*}
+    - Therefore
+      \begin{equation*}
+      \begin{matrix}
+      \theta(\{ Scythe, Skeleton, Rat, Robe \}) = \\
+      \left.
+      \begin{cases}
+      \{:name \Leftarrow Skeleton,\Rightarrow :body,Scythe \Leftarrow :holds, \Leftarrow :wears\}, \\
+      \{:name \Leftarrow Skeleton, \Rightarrow :body,\Leftarrow :holds, Robe \Leftarrow :wears\}, \\
+      \{:name \Leftarrow Rat,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
+      \{:name \Leftarrow Rat, \Rightarrow :body,\Leftarrow :holds, Robe \Leftarrow :wears\}, \\
+      \{ :name \Leftarrow Robe, \Rightarrow :worn,Scythe \Leftarrow :holds \}
+      \end{cases}
+      \right\}
+      \end{matrix}
+      \end{equation*}
+    - So if we only want to rule out clothing holding holding things
+      so, which might not make much sense in a hypothetical context or
+      not be worth considering
+      \begin{equation*}
+      \begin{matrix}
+      \oplus(\{:worn \Leftarrow :holds\},\theta(\{Scythe,Skeleton,Rat,Robe\})  = \\
+      \left.
+      \begin{cases}
+      \{:name \Leftarrow Skeleton,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
+      \{:name \Leftarrow Skeleton,\Rightarrow :body,\Leftarrow :holds,Robe \Leftarrow :wears\}, \\
+      \{:name \Leftarrow Rat,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
+      \{:name \Leftarrow Rat,\Rightarrow :body,\Leftarrow :holds,Robe \Leftarrow :wears \}
+      \end{cases}
+      \right\}
+      \end{matrix}
+      \end{equation*}
      - (Notice the last elements of the sets being the difference)
 ** The $\odot$ function
    computes for the simplest "thinking machine" in Basic Naive Idea
    Theory. It that takes in a triple of the "focus", "parts", and
    "restrictions" and returns a triple with the same value for "parts"
    and "restrictions", but the "focus" is different. It is easily
-   defined as \(\odot(f, p, r) = (\oplus(r, \theta(f \cup p)), p,
-   r)\).
+   defined as \(\odot(f, p, r) = (\oplus(r,\theta(f \cup p)),p,r)\).
 *** The upsides
     An $\oplus$ function based "thinking machine" can be easily
     defined in such a way that it constructions new and complex
@@ -222,7 +197,8 @@
     - No way to learn about the relationships between properties or
       and other properties or "prototypes" of properties.
     - No personality.
-* Anti-clock Naive Idea Theory
+* Anti-clock Naive Idea Theory 
+<<the sum clock>>
   [[./clock.png]]
 ** Some rambling
 *** It's about time!
@@ -237,50 +213,61 @@
     - The seconds dragged on...
     - All good things come to an end.
 *** What we mean by time
-    Do not take anything here absolutely seriously, it is a
-    metaphor. The type of time we plan to deal with is not the time
-    we deal with in physics problems, but more like the time of an
-    internal clock telling you what needs to be done.
+    Do not take anything here absolutely seriously, it is just my
+    philosophical rambling about how a sense of time might work. For
+    this paper it is important for a sense of time to be represented,
+    so my *very very untested* model with have to do. The type of time
+    we plan to deal with is not the time we deal with in physics
+    problems, but more like the time of an internal clock telling you
+    what needs to be done.
 *** When is the time right?
     How do we know when it is a time to sleep, a time to eat, a time to
     cry, a time to know, a time to pretend, a time to sigh, a time to
     read, a time finish what must be done, and a time to give up?
 *** Rephrasing the problem
-    Say $U_t$ is the set of all times (it is denoted as $U_t$ because if
-    we are dealing with a system of times, it would be the universe of
-    discourse). So how would we map from this set at any given moment
-    to a specific time? We could image a 12 hour clock[1] as a mapping
-    from a subset of $U_t$ containing twelve times to a single one of
-    those. So what determines what time evaluated form this mapping?
-    Well, time. That is confusing, so we will denote this time that
-    influences the result of the mapping as a member of the set of
-    $U_T$. With this in place a clock might be represented as 
-    - A triple $(f, S_t,T_1)$, with $S_t \subseteq U_t$, $T_1 \in U_T$ and
-      a function $f$ that takes in the triple and returns a pair
-      containing a triple that can be reused with $f$ and a time $t$. 
-    - Such that $f((f,S_t,T_1)) = ((f,S_t,T_2),t)$ with $T_2 \in U_T$ and $t
-      \in S_t$.
-    \begin{align}
-    E_0 &= mc^2                              \\
-    E &= \frac{mc^2}{\sqrt{1-\frac{v^2}{c^2}}}
-    \end{align}
-** From sets to times
-   The domain of discourse, also called the universe of discourse,
-   universal set, or simply universe, is the set of entities over
-   which certain variables of interest in some formal treatment may
-   range. If we let $U_c$ represent the universe of discourse for all
-   times, $U_c$ would probably impossible to represent in any
-   meaningful fashion. This is because as a culture changes and
-   evolves what there is time for changes, once there was a time for
-   human sacrifices, now there is a time for programming. $U_c$
-   therefore must either evolve.
-** The anti-clock
-   How do we know what it is a time for? Clocks tell what time is, so
-   we will call something that tells time what it is the anti-clock.
-** Some sum-clocks
-   If every anti-clocked told the universal clock what it was a time
-   for then the universal clock for any reasonably complex system
-   would be 
+    Say $\mathbb{T}$ is the set of all times. So how would we map from
+    this set at any given moment to a specific time? We could image a
+    12 hour clock[1] as a mapping from a subset of $\mathbb{T}$
+    containing twelve times to a single one of those. So what
+    determines what time evaluates form this mapping? Well, time. That
+    is confusing, so we will denote this time that influences the
+    result of the mapping as a member of the set of $\mathfrak{T}$.
+    With this in place a clock might be represented as:
+    - A triple $(f_t, S_t,T_1)$, with $S_t \subseteq \mathbb{T}$, $T_1 \in
+      \mathfrak{T}$ and a function $f_t$ that takes in the triple and
+      returns a pair containing a triple that can be reused with $f_t$
+      and a time $t$,
+    - Such that $f_t((f_t,S_t,T_1)) = ((f_t,S_t,T_2),t)$ with $T_2 \in
+      \mathfrak{T}$ and $t \in S_t$.
+*** Proper timing
+    Now the question becomes what values to choose for $S_t$, $T_1$, and
+    $f_t$ in order to deal with a more human inspired perception of
+    time. Just because I feel it would be interesting and I a lazy, it
+    might be a neat idea for the system to deal with computing $S_t$
+    and $T_1$. So if a clock is told by a member of $\mathfrak{T}$ what
+    time it is in terms of $\mathbb{T}$, then an anti-clock is told by
+    a member of $\mathbb{T}$ what time is in terms of
+    $\mathfrak{T}$. Why would this be useful in anyway you might ask.
+*** *Some sum clocks!*
+    As the [[the sum clock][picture]] at the beginning part of Anti-clock Naive Idea
+    Theory might indicate the big idea of theory is the sum clock!
+# ** From sets to times
+#    The domain of discourse, also called the universe of discourse,
+#    universal set, or simply universe, is the set of entities over
+#    which certain variables of interest in some formal treatment may
+#    range. If we let $U_c$ represent the universe of discourse for all
+#    times, $U_c$ would probably impossible to represent in any
+#    meaningful fashion. This is because as a culture changes and
+#    evolves what there is time for changes, once there was a time for
+#    human sacrifices, now there is a time for programming. $U_c$
+#    therefore must either evolve.
+# ** The anti-clock
+#    How do we know what it is a time for? Clocks tell what time is, so
+#    we will call something that tells time what it is the anti-clock.
+# ** Some sum-clocks
+#    If every anti-clocked told the universal clock what it was a time
+#    for then the universal clock for any reasonably complex system
+#    would be 
 * License (GNU Free Documentation License, Version 1.3)
 
                 GNU Free Documentation License
