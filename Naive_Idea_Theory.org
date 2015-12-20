@@ -251,6 +251,14 @@
 *** *Some sum clocks!*
     As the [[the sum clock][picture]] at the beginning part of Anti-clock Naive Idea
     Theory might indicate the big idea of theory is the sum clock!
+    $\newline$
+    \begin{tikzpicture}
+    \draw (0,0) grid (7,5);
+    \draw (0,0) node[below left] {$A$};
+    \draw (7,5) node[above right] {$B$};
+    \fill (0,0) circle (2pt);
+    \fill (7,5) circle (2pt);
+    \end{tikzpicture}
 # ** From sets to times
 #    The domain of discourse, also called the universe of discourse,
 #    universal set, or simply universe, is the set of entities over
