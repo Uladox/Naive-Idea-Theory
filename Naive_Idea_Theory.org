@@ -3,6 +3,7 @@
 #+BIND: org-latex-title-command ""
 #+STARTUP: latexpreview inlineimages
 #+LATEX_HEADER: \usepackage{tikz} 
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows,fit}
 #+LATEX_HEADER: \usepackage[clock]{ifsym}
 #+TITLE:
   [[./frontpage.png]]
@@ -13,6 +14,7 @@
 #+Latex: \maketitle
 #+TOC: headlines 2
 #+Latex: \newpage
+
 [[./ampersand.png]]
 * Introduction
   There are many approaches to artificial intelligence. Each one has
@@ -51,22 +53,22 @@
   A copy of the license is included in the section entitled "GNU
   Free Documentation License". A copy of the license should be
   included at the bottom of this document.
-* Basic Naive Idea Theory.
-** The $:$ indicator
-   Denotes that the word after it is a property.
+* Basic Naive Idea Theory
+** Properties
+   In Naive Idea Theory, ideas are distinguished by their properties.
 *** Examples
     A baseball might have properties such as:
-    - $:held$, the property that something can be held.
-    - $:thrown$, the property that something can be thrown.
-    - $:caught$, the property that something can be caught.
+    - $held$, since it can be held.
+    - $thrown$, since it can be thrown.
+    - $caught$, since it can be caught.
 ** The $\Rightarrow$ relation
    Denotes for \(A \Rightarrow P\), $P$ is a property of $A$. Also it
    might appear in a set such as \(A = \{ \Rightarrow P \}\) in order
    to denote that the set $A$ has the property $P$.
-*** Example:
-    \(Baseball \Rightarrow :held\) can be read as a baseball can be
+*** Example
+    \(Baseball \Rightarrow held\) can be read as a baseball can be
     held.
-*** Expanded:
+*** Expanded
     If a set theory approach is chosen, 
     \(A \Rightarrow P\) might be read as 
     \((P \in A) \vee (P~is~a~property)\)
@@ -75,17 +77,17 @@
    might appear in a set such as \(B = \{ P \Leftarrow none \}\) or
    \(B = \{ P \Leftarrow \}\) to denote that $B$ can have a property
    but does not.
-*** Example:
-    \(S = \{ :holds \Leftarrow spear \}\) can be read as \(S~holds~a~spear.\)
+*** Example
+    \(S = \{holds \Leftarrow spear \}\) can be read as \(S~holds~a~spear.\)
 ** The $\tau$ function
    Is defined such that 
    - \(\tau(A, B) =\) if $B$ has a property that $A$ is compatible
      with, then fill in said property of $A$ with $B$, otherwise
      return the empty set.
-*** Example:
-     - \(person = \{ :holds \Leftarrow  \}\)
-     - \(spear \Rightarrow :held\)
-     - \(\tau(person, spear) = \{ :holds \Leftarrow spear \}\)
+*** Example
+     - \(person = \{holds \Leftarrow  \}\)
+     - \(spear \Rightarrow held\)
+     - \(\tau(person, spear) = \{holds \Leftarrow spear \}\)
 *** Expanded
     \(\tau(A, B) = 
     \{ if~\exists_{P_A}
@@ -108,26 +110,26 @@
    structure that can contain things and applies $\tau$ to all pairs in
    the structure. The $\theta$ function has a complexity of at least
    $O(n^2)$.
-*** Example:
+*** Example
     \begin{equation*}
     \theta\left(\left.
     \begin{cases}
-    spear \Rightarrow :held, \\
-    \{:name \Leftarrow Bob,:holds \Leftarrow\}, \\
-    \{:name \Leftarrow Alyce,:holds \Leftarrow\}
+    spear \Rightarrow held, \\
+    \{name \Leftarrow Bob,holds \Leftarrow\}, \\
+    \{name \Leftarrow Alyce,holds \Leftarrow\}
     \end{cases}
     \right\}\right)=
     \left.
     \begin{cases}
-    \{:name \Leftarrow Bob,:holds \Leftarrow spear\}, \\
-    \{:name \Leftarrow Alyce,:holds \Leftarrow spear\} \\
+    \{name \Leftarrow Bob,holds \Leftarrow spear\}, \\
+    \{name \Leftarrow Alyce,holds \Leftarrow spear\} \\
     \end{cases}
     \right\}
     \end{equation*}
-*** Expanded:
-**** In set theory with logic:
+*** Expanded
+**** In set theory with logic
      \(\theta(S) = \{ \tau(A, B)~|~\forall{}a,b \in S \} \)
-**** Or with the Cartesian product:
+**** Or with the Cartesian product
      \(\theta(S) = \{ \tau(C)~|~C \in S \times S \}\)
 ** The $\oplus$ function
    - filters out things that do not work according to a context. This
@@ -135,7 +137,7 @@
      of "restrictions" and the second set is the set the "focus" of
      things to restrict. The restrictions" contains relations that are
      not allowed (for example a color can not have the property of
-     being held so \(:held \Leftarrow :color\) in the "restriction"
+     being held so \(held \Leftarrow color\) in the "restriction"
      set would represent this). The value returned by the $\oplus$
      function might thus be the set of elements in the "focus" that
      are not disallowed. In which case the $\oplus$ function has a
@@ -146,10 +148,10 @@
     - With
       \begin{equation*}
       \begin{array}{lcl}
-      Scythe &=& \{:name \Leftarrow Scythe, \Rightarrow :held\} \\
-      Skeleton &=& \{:name \Leftarrow Skeleton, \Rightarrow :body,\Leftarrow :holds,\Leftarrow :wears\} \\
-      Rat &=& \{:name \Leftarrow Rat,\Rightarrow :body,\Leftarrow :holds, \Leftarrow :wears\} \\
-      Robe &=& \{:name \Leftarrow Robe,\Rightarrow :worn,\Leftarrow :holds\}
+      Scythe &=& \{name \Leftarrow Scythe, \Rightarrow held\} \\
+      Skeleton &=& \{name \Leftarrow Skeleton, \Rightarrow body,\Leftarrow holds,\Leftarrow wears\} \\
+      Rat &=& \{name \Leftarrow Rat,\Rightarrow body,\Leftarrow holds, \Leftarrow wears\} \\
+      Robe &=& \{name \Leftarrow Robe,\Rightarrow worn,\Leftarrow holds\}
       \end{array}
       \end{equation*}
     - Therefore
@@ -158,11 +160,11 @@
       \theta(\{ Scythe, Skeleton, Rat, Robe \}) = \\
       \left.
       \begin{cases}
-      \{:name \Leftarrow Skeleton,\Rightarrow :body,Scythe \Leftarrow :holds, \Leftarrow :wears\}, \\
-      \{:name \Leftarrow Skeleton, \Rightarrow :body,\Leftarrow :holds, Robe \Leftarrow :wears\}, \\
-      \{:name \Leftarrow Rat,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
-      \{:name \Leftarrow Rat, \Rightarrow :body,\Leftarrow :holds, Robe \Leftarrow :wears\}, \\
-      \{ :name \Leftarrow Robe, \Rightarrow :worn,Scythe \Leftarrow :holds \}
+      \{name \Leftarrow Skeleton,\Rightarrow body,Scythe \Leftarrow holds, \Leftarrow wears\}, \\
+      \{name \Leftarrow Skeleton, \Rightarrow body,\Leftarrow holds, Robe \Leftarrow wears\}, \\
+      \{name \Leftarrow Rat,\Rightarrow body,Scythe \Leftarrow holds,\Leftarrow wears\}, \\
+      \{name \Leftarrow Rat, \Rightarrow body,\Leftarrow holds, Robe \Leftarrow wears\}, \\
+      \{ name \Leftarrow Robe, \Rightarrow worn,Scythe \Leftarrow holds \}
       \end{cases}
       \right\}
       \end{matrix}
@@ -172,13 +174,13 @@
       not be worth considering
       \begin{equation*}
       \begin{matrix}
-      \oplus(\{:worn \Leftarrow :holds\},\theta(\{Scythe,Skeleton,Rat,Robe\})  = \\
+      \oplus(\{worn \Leftarrow holds\},\theta(\{Scythe,Skeleton,Rat,Robe\})  = \\
       \left.
       \begin{cases}
-      \{:name \Leftarrow Skeleton,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
-      \{:name \Leftarrow Skeleton,\Rightarrow :body,\Leftarrow :holds,Robe \Leftarrow :wears\}, \\
-      \{:name \Leftarrow Rat,\Rightarrow :body,Scythe \Leftarrow :holds,\Leftarrow :wears\}, \\
-      \{:name \Leftarrow Rat,\Rightarrow :body,\Leftarrow :holds,Robe \Leftarrow :wears \}
+      \{name \Leftarrow Skeleton,\Rightarrow body,Scythe \Leftarrow holds,\Leftarrow wears\}, \\
+      \{name \Leftarrow Skeleton,\Rightarrow body,\Leftarrow holds,Robe \Leftarrow wears\}, \\
+      \{name \Leftarrow Rat,\Rightarrow body,Scythe \Leftarrow holds,\Leftarrow wears\}, \\
+      \{name \Leftarrow Rat,\Rightarrow body,\Leftarrow holds,Robe \Leftarrow wears \}
       \end{cases}
       \right\}
       \end{matrix}
@@ -208,103 +210,136 @@
     - No way to learn about the relationships between properties or
       and other properties or "prototypes" of properties.
     - No personality.
-* Anti-clock Naive Idea Theory 
+* Timed Naive Idea Theory
 <<the sum clock>>
   [[./clock.png]]
-** Some rambling
-*** It's about time!
-    - There's a time and place for everything.
-    - It's time to get going.
-    - I don't have that kind of time.
-    - Talk about timing.
-    - Where has the time gone?
-    - The best and worst of times.
-    - Ahead of their time.
-    - Time goes by fast when you're having fun.
-    - The seconds dragged on...
-    - All good things come to an end.
-*** What we mean by time
-    Do not take anything here absolutely seriously, it is just my
-    philosophical rambling about how a sense of time might work. For
-    this paper it is important for a sense of time to be represented,
-    so my *very very untested* model with have to do. The type of time
-    we plan to deal with is not the time we deal with in physics
-    problems, but more like the time of an internal clock telling you
-    what needs to be done.
-*** When is the time right?
-    How do we know when it is a time to sleep, a time to eat, a time to
-    cry, a time to know, a time to pretend, a time to sigh, a time to
-    read, a time finish what must be done, and a time to give up?
-*** Rephrasing the problem
-    Say $\mathbb{T}$ is the set of all times. So how would we map from
-    this set at any given moment to a specific time? We could image a
-    12 hour clock[1] as a mapping from a subset of $\mathbb{T}$
-    containing twelve times to a single one of those. So what
-    determines what time evaluates form this mapping? Well, time. That
-    is confusing, so we will denote this time that influences the
-    result of the mapping as a member of the set of $\mathfrak{T}$.
-    With this in place a clock might be represented as:
-    - A triple $(f_t, S_t,T_1)$, with $S_t \subseteq \mathbb{T}$, $T_1 \in
-      \mathfrak{T}$ and a function $f_t$ that takes in the triple and
-      returns a pair containing a triple that can be reused with $f_t$
-      and a time $t$,
-    - Such that $f_t((f_t,S_t,T_1)) = ((f_t,S_t,T_2),t)$ with $T_2 \in
-      \mathfrak{T}$ and $t \in S_t$.
-*** Proper timing
-    Now the question becomes what values to choose for $S_t$, $T_1$, and
-    $f_t$ in order to deal with a more human inspired perception of
-    time. Just because I feel it would be interesting and I a lazy, it
-    might be a neat idea for the system to deal with computing $S_t$
-    and $T_1$. So if a clock is told by a member of $\mathfrak{T}$ what
-    time it is in terms of $\mathbb{T}$, then an anti-clock is told by
-    a member of $\mathbb{T}$ what time is in terms of
-    $\mathfrak{T}$. Why would this be useful in anyway you might ask.
-*** *Some sum clocks!*
-    As the [[the sum clock][picture]] at the beginning part of Anti-clock Naive Idea
-    Theory might indicate the big idea of theory is the sum clock! The
-    biggest change that we need to make is for sum clocks to take in
-    an n-tuple of $\mathfrak{T}$ and for sum anti-clocks to take in an
-    n-tuple of $\mathbb{T}$.
-    $\newline$
-    \begin{tikzpicture}
-    [level distance=1.5cm,
-    level 1/.style={sibling distance=3cm},
-    level 2/.style={sibling distance=1.5cm}]
-    \node {$\VarTaschenuhr_\sum$}
-    child {node {$\neg\Wecker_{\sum}$}
-      child {node {$\showclock{4}{50}^\prime$}}
-      child {node {$\showclock{0}{42}^\prime$}}
-    }
-    child {node {$\neg\Taschenuhr_{\sum}$}
-      child {node {$\StopWatchEnd^\prime$}}
-      child {node {$\showclock{3}{00}^\prime$}}
-    };
-    \end{tikzpicture}
-    $\newline$
-    This model should give way easily to emergent times by the
-    sum-clocks from lower order prime-clocks. An example of this is
-    when it is a time to eat breakfast:
-    $\newline$
-    \begin{tikzpicture}
-    [level distance=1.5cm,
-    level 1/.style={sibling distance=3cm},
-    level 2/.style={sibling distance=6cm}]
-    \node {$\VarTaschenuhr_{\sum}\xrightarrow[\text{will denote a time for}]{This~sum~clock} Breakfast$}
-    child {node {$\neg\Wecker_{\sum}\xrightarrow[\text{will map to a member of}]{This~sum~anti-clock} \mathfrak{T}$}
-      child {node {$\StopWatchEnd^\prime\xrightarrow[\text{reads}]{This~prime-clock} To~eat$}}
-      child {node {$\StopWatchEnd^\prime\xrightarrow[\text{reads}]{This~prime-clock} Morning$}}
-    };
-    \end{tikzpicture}
-    $\newline$
-**** Implementing
-     It might be a good idea for reading each clock to be a $O(1)$
-     operation so a new clock being added do not slow anything down
-     except the sum anti-clock reading it. What this means is each
-     clock is running concurrently dealing with its own bit of
-     representation that needs a sense of time.  For programming this
-     using threads mutexs for a given clock it should use a mutex when
-     changing its own time displayed, but not when determining what
-     that time should be changed to.
+** It's about time!
+   - There's a time and place for everything.
+   - It's time to get going.
+   - I don't have that kind of time.
+   - Talk about timing.
+   - Where has the time gone?
+   - The best and worst of times.
+   - Ahead of their time.
+   - Time goes by fast when you're having fun.
+   - The seconds dragged on...
+   - All good things come to an end.
+** What we mean by time
+   Do not take anything here absolutely seriously, it is just my
+   philosophical rambling about how a sense of time might work. For
+   this paper it is important for a sense of time to be represented,
+   so my *very very untested* model with have to do. The type of time
+   we plan to deal with is not the time we deal with in physics
+   problems, but more like the time of an internal clock telling you
+   what needs to be done.
+** When is the time right?
+   How do we know when it is a time to sleep, a time to eat, a time to
+   cry, a time to know, a time to pretend, a time to sigh, a time to
+   read, a time finish what must be done, and a time to give up?
+** Rephrasing the problem
+   Say $\mathbb{T}$ is the set of all times. So how would we map from
+   this set at any given moment to a specific time? We could image a
+   12 hour clock[1] as a mapping from a subset of $\mathbb{T}$
+   containing twelve times to a single one of those. So what
+   determines what time evaluates form this mapping? Well, time. That
+   is confusing, so we will denote this time that influences the
+   result of the mapping as a member of the set of $\mathfrak{T}$.
+   With this in place a clock might be represented as:
+   - A triple $(f_t, S_t,T_1)$, with $S_t \subseteq \mathbb{T}$, $T_1 \in
+     \mathfrak{T}$ and a function $f_t$ that takes in the triple and
+     returns a pair containing a triple that can be reused with $f_t$
+     and a time $t$,
+   - Such that $f_t((f_t,S_t,T_1)) = ((f_t,S_t,T_2),t)$ with $T_2 \in
+     \mathfrak{T}$ and $t \in S_t$.
+** Proper timing
+   Now the question becomes what values to choose for $S_t$, $T_1$, and
+   $f_t$ in order to deal with a more human inspired perception of
+   time. Just because I feel it would be interesting and I a lazy, it
+   might be a neat idea for the system to deal with computing $S_t$
+   and $T_1$. So if a clock is told by a member of $\mathfrak{T}$ what
+   time it is in terms of $\mathbb{T}$, then an anti-clock is told by
+   a member of $\mathbb{T}$ what time is in terms of
+   $\mathfrak{T}$. Why would this be useful in anyway you might ask.
+** *Some sum clocks!*
+   As the [[the sum clock][picture]] at the beginning part of Anti-clock Naive Idea
+   Theory might indicate the big idea of theory is the sum clock! The
+   biggest change that we need to make is for sum clocks to take in
+   an n-tuple of $\mathfrak{T}$ and for sum anti-clocks to take in an
+   n-tuple of $\mathbb{T}$.
+   $\newline$
+   \begin{tikzpicture}
+   [level distance=1.5cm,
+   level 1/.style={sibling distance=3cm},
+   level 2/.style={sibling distance=1.5cm}]
+   \node {$\VarTaschenuhr_\sum$}
+   child {node {$\neg\Wecker_{\sum}$}
+     child {node {$\showclock{4}{50}^\prime$}}
+     child {node {$\showclock{0}{42}^\prime$}}
+   }
+   child {node {$\neg\Taschenuhr_{\sum}$}
+     child {node {$\StopWatchEnd^\prime$}}
+     child {node {$\showclock{3}{00}^\prime$}}
+   };
+   \end{tikzpicture}
+   $\newline$
+   This model should give way easily to emergent times by the
+   sum clocks from lower order prime-clocks. An example of this is
+   when it is a time to eat breakfast:
+   $\newline$
+   \begin{tikzpicture}
+   [level distance=1.5cm,
+   level 1/.style={sibling distance=3cm},
+   level 2/.style={sibling distance=6cm}]
+   \node {$\VarTaschenuhr_{\sum}\xrightarrow[\text{will denote a time for}]{This~sum~clock} Breakfast$}
+   child {node {$\neg\Wecker_{\sum}\xrightarrow[\text{will map to a member of}]{This~sum~anti-clock} \mathfrak{T}$}
+     child {node {$\StopWatchEnd^\prime\xrightarrow[\text{reads}]{This~prime-clock} To~eat$}}
+     child {node {$\StopWatchEnd^\prime\xrightarrow[\text{reads}]{This~prime-clock} Morning$}}
+   };
+   \end{tikzpicture}
+   $\newline$
+*** Implementing notes
+    It might be a good idea for reading each clock to be a $O(1)$
+    operation so a new clock being added do not slow anything down
+    except the sum anti-clock reading it. What this means is each
+    clock is running concurrently dealing with its own bit of
+    representation that needs a sense of time.  For programming this
+    using threads mutexs for a given clock it should use a mutex when
+    changing its own time displayed, but not when determining what
+    that time should be changed to.
+** Long short-term memory
+   \begin{tikzpicture}[node distance = 3cm, text=white, auto]
+    \tikzstyle{value} = [diamond, draw, fill=black!60!yellow!100, 
+     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!100, 
+     text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{small circle} = [circle, draw, fill=red!100, 
+     minimum width=1em, text centered, rounded corners, minimum height=1em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=black!60!green, node distance=3cm,
+     minimum height=2em]
+    % Place nodes
+    \node [block] (memory) {memory cell};
+    \node [small circle, left of=memory] (input_gate) {x};
+    \node [small circle, right of=memory] (output_gate) {x};
+    \node [value, left of=input_gate] (value) {value};
+    \node [cloud, below of=input_gate, node distance=1.5cm] (input_restrict) {input restriction};
+    \node [cloud, below of=memory, node distance=2cm] (forget) {forget};
+    \node [cloud, below of=output_gate, node distance=1.5cm] (output_restrict) {output restriction};
+    \coordinate[right of=output_gate] (final_result);
+    % Sections
+    \node [dashed, label={[text=gray] to remember}, fit=(value) (input_gate) (input_restrict), draw] (input_sec) {};
+    \node [dashed, label={[text=gray] to forget}, fit=(memory) (forget), draw] (remember_sec) {};
+    \node [dashed, label={[text=gray] to recall}, fit=(output_gate) (output_restrict), draw] (output_sec) {};
+    % Draw edges
+    \path [line] (value) -- (input_gate);
+    \path [line] (input_restrict) -- (input_gate);
+    \path [line] (value) -- (input_gate);
+    \path [line] (input_gate) -- (memory);
+    \path [line] (forget) -- (memory);
+    \path [line] (memory) -- (output_gate);
+    \path [line] (output_restrict) -- (output_gate);
+    \path [line] (output_gate) -- (final_result);
+   \end{tikzpicture}
 * License (GNU Free Documentation License, Version 1.3)
 
                 GNU Free Documentation License
@@ -765,7 +800,3 @@ to permit their use in free software.
   working with, but pretend that instead of hours and a constant
   increment of time we are dealing with some arbitrary set of times
   and some other mechanism for changing from one to the next.
-
-\begin{equation}
-  \left.\frac{\frac{1}{x}}{\frac{5}{1+\frac{x}{7}}}\right\vert_{-5}^{17}
-\end{equation}
