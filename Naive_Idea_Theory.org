@@ -435,7 +435,7 @@
 ** Proper timing
    Now the question becomes what values to choose for $S_t$, $T_1$, and
    $f_t$ in order to deal with a more human inspired perception of
-   time. Just because I feel it would be interesting and I a lazy, it
+   time.[fn:5] Just because I feel it would be interesting and I a lazy, it
    might be a neat idea for the system to deal with computing $S_t$
    and $T_1$. So if a clock is told by a member of $\mathfrak{T}$ what
    time it is in terms of $\mathbb{T}$, then an anti-clock is told by
@@ -496,8 +496,8 @@
    will not just use clocks to compute a time for something (which is
    akin to a property), but also how much it is a time for something
    (which is like a degree of truth). Thus members of $\mathbb{T}$ are
-   pairs with properties[fn:7] like in Basic Naive Idea Theory[fn:5] and degrees
-   of truth like in artificial neural networks![fn:6]
+   pairs with properties[fn:6] like in Basic Naive Idea Theory[fn:7] and degrees
+   of truth like in artificial neural networks![fn:8]
    $\newline$
    $\StopWatchEnd^\prime\xrightarrow[\text{reads a time to}]{This~prime-clock}
    (Make~connections!,0.998762356)$
@@ -968,10 +968,16 @@ to permit their use in free software.
   increment of time we are dealing with some arbitrary set of times
   and some other mechanism for changing from one to the next..
 
-[fn:5] They are not to be tied down to topology, but are object of
+[fn:5] Also we have not quite defined what $\mathbb{T}$ and
+  $\mathfrak{T}$ actually are. This we will define what they are
+  latter when we have defined the problem even more.
+
+[fn:6] These are properties of the time.
+
+[fn:7] They are not to be tied down to topology, but are object of
   their own class!
 
-[fn:6] From now on degrees of truth will be referred to as intensities
+[fn:8] From now on degrees of truth will be referred to as intensities
   due to brevity.
 
-[fn:7] These are properties of the time.
+
