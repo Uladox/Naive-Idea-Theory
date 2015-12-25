@@ -3,12 +3,12 @@
 #+BIND: org-latex-title-command ""
 #+STARTUP: latexpreview inlineimages
 #+LATEX_HEADER: \usepackage{tikz} 
-#+LATEX_HEADER: \usetikzlibrary{shapes,arrows,fit}
+#+LATEX_HEADER: \usetikzlibrary{shapes,arrows,fit,positioning}
 #+LATEX_HEADER: \usepackage[clock]{ifsym}
 #+TITLE:
   [[./frontpage.png]]
 #+Latex: \newpage
-#+Latex: \title{Emacs as a Latex Editor}
+#+Latex: \title{Naive Idea Theory}
 #+Latex: \author{Uladox}
 #+Latex: \date{\today}
 #+Latex: \maketitle
@@ -16,6 +16,8 @@
 #+Latex: \newpage
 
 [[./ampersand.png]]
+* Episode (aka version)
+  "Prolonged Prologue"[fn:1]
 * Introduction
   There are many approaches to artificial intelligence. Each one has
   its distinct advantages and disadvantages. The approach in this
@@ -29,7 +31,7 @@
   stopped by inhibitors. These enzymes, solution, and inhibitors might
   be thought of as a "context" of sorts. Here the view is that "ideas"
   take on a "natural" composition with the help or discouragement of
-  the "context."
+  the "context."[fn:2]
 * For viewing in an org file
   Ignore this part if you are reading this in a html document, pdf
   document, or any other document that does not end with ".org"
@@ -65,9 +67,11 @@
    Denotes for \(A \Rightarrow P\), $P$ is a property of $A$. Also it
    might appear in a set such as \(A = \{ \Rightarrow P \}\) in order
    to denote that the set $A$ has the property $P$.
-*** Example
-    \(Baseball \Rightarrow held\) can be read as a baseball can be
-    held.
+*** Examples
+    - \(Baseball \Rightarrow held\) can be read as a baseball can be
+      held.
+    - \(n \Rightarrow (= 5)\) can be read as n can be equal to 5.
+    - \(n \Rightarrow (\approx 5)\) can be read as n can be approximately 5.
 *** Expanded
     If a set theory approach is chosen, 
     \(A \Rightarrow P\) might be read as 
@@ -210,6 +214,182 @@
     - No way to learn about the relationships between properties or
       and other properties or "prototypes" of properties.
     - No personality.
+* Side note on artificial neural networks
+  In the world of artificial intelligence neural networks are
+  becoming harder and harder to ignore. Many difficult problems have
+  been solved using them such as reading written words and pole
+  balancing. While Naive Idea Theory does not use neural networks for
+  reasons explained later, it would be foolish to just ignore them. A
+  diagram of a neural network might look like:
+  $\newline$
+  \begin{tikzpicture}[node distance = 1cm, text=white, auto]
+
+   % Style
+   \tikzstyle{small circle} = [circle, draw, fill=white!50!gray, 
+    minimum width=1em, text centered, rounded corners, minimum height=1em]
+   \tikzstyle{line} = [draw, -latex']
+
+   % Place nodes
+   \node [small circle] (x0y0) {};
+   \node [small circle, below of=x0y0] (x0y1) {};
+   \node [small circle, below of=x0y1] (x0y2) {};
+
+   \coordinate[left of=x0y0] (input_coord_0);
+   \coordinate[left of=x0y1] (input_coord_1);
+   \coordinate[left of=x0y2] (input_coord_2);
+
+   \node [small circle, above right= 0.25cm and 1cm of x0y0] (x1y0) {};
+   \node [small circle, below of=x1y0] (x1y1) {};
+   \node [small circle, below of=x1y1] (x1y2) {};
+   \node [small circle, below of=x1y2] (x1y3) {};
+
+   \node [small circle, right= 1cm of x1y0] (x2y0) {};
+   \node [small circle, below of=x2y0] (x2y1) {};
+   \node [small circle, below of=x2y1] (x2y2) {};
+   \node [small circle, below of=x2y2] (x2y3) {};
+
+   \node [small circle, right= 1cm of x2y1] (x3y1) {};
+   \node [small circle, right= 1cm of x2y2] (x3y2) {};
+
+   \coordinate[right of=x3y1] (output_coord_0) {};
+   \coordinate[right of=x3y2] (output_coord_1) {};
+
+   % Draw sections
+   \node [dashed, color=red, label={[text=red] input}, fit=(x0y0) (x0y2), draw] {};
+   \node [dashed, color=orange, label={[text=orange] hidden}, fit=(x1y0) (x2y3), draw] {};
+   \node [dashed, color=green, label={[text=green] output}, fit=(x3y1) (x3y2), draw] {};
+
+
+   % Draw edges
+   \path [line] (input_coord_0) -- (x0y0);
+   \path [line] (input_coord_1) -- (x0y1);
+   \path [line] (input_coord_2) -- (x0y2);
+
+   \path [line] (x0y0) edge (x1y0) edge (x1y1) edge (x1y2) edge (x1y3);
+   \path [line] (x0y1) edge (x1y0) edge (x1y1) edge (x1y2) edge (x1y3);
+   \path [line] (x0y2) edge (x1y0) edge (x1y1) edge (x1y2) edge (x1y3);
+
+   \path [line] (x1y0) edge (x2y0) edge (x2y1) edge (x2y2) edge (x2y3);
+   \path [line] (x1y1) edge (x2y0) edge (x2y1) edge (x2y2) edge (x2y3);
+   \path [line] (x1y2) edge (x2y0) edge (x2y1) edge (x2y2) edge (x2y3);
+   \path [line] (x1y3) edge (x2y0) edge (x2y1) edge (x2y2) edge (x2y3);
+
+   \path [line] (x2y0) edge (x3y1) edge (x3y2);
+   \path [line] (x2y1) edge (x3y1) edge (x3y2);
+   \path [line] (x2y2) edge (x3y1) edge (x3y2);
+   \path [line] (x2y3) edge (x3y1) edge (x3y2);
+
+   \path [line] (x3y1) -- (output_coord_0);
+   \path [line] (x3y2) -- (output_coord_1);
+
+  \end{tikzpicture}
+  $\newline$
+  So, what actually is this? There are many great resources online for
+  artificial neural networks, so we won't focus on too many details
+  irrelevant to Naive Idea Theory. What we will focus on is what a
+  node in the network is. It might seem obvious that it is a
+  representation of a neuron, but that is not the whole picture. A
+  node is a property and the value that it returns is its degree of
+  truth.[fn:3] An example for reading writing is that an input node represent
+  the property of darkness for a pixel and an output node represents
+  it closeness to the image being a letter. Hidden nodes also
+  represent properties, but in practice we often don't know what for
+  (however we almost always know what properties the input and output
+  nodes represent, with the biggest exception being when the networks
+  are part of a larger network and/or genetic algorithm).
+** Long short-term memory
+   \begin{tikzpicture}[node distance = 1cm, text=white, label={[text=gray] long short-term block}, auto]
+
+    % Style
+    \tikzstyle{small circle} = [circle, draw, fill=white!50!gray, 
+     minimum width=1em, text centered, rounded corners, minimum height=1em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{block} = [rectangle, draw, fill=blue!100, 
+     text width=5em, text centered, rounded corners, minimum height=4em]
+
+    % Place nodes
+    \node [small circle] (value) {};
+    \node[left, color=gray] at (value.west) {value};
+    \node [small circle, below of=value] (input_restrict) {};
+    \node[left, color=gray] at (input_restrict.west) {input restriction};
+    \node [small circle, below of=input_restrict] (forget) {};
+    \node[left, color=gray] at (forget.west) {forget};
+    \node [small circle, below of=forget] (output_restrict) {};
+    \node[left, color=gray] at (output_restrict.west) {output restriction};
+
+    \node [small circle, right= 1cm of value, fill=red!100] (input_gate) {x};
+    \node [block, right= 1cm of input_gate] (memory) {memory cell};
+    \node [small circle, right= 1cm of memory, fill=red!100] (output_gate) {x};
+    \coordinate[right of=output_gate] (final_result);
+
+    % Draw edges
+    \path [line] (value) -- (input_gate) -- (memory) -- (output_gate) -- (final_result);
+    \path [line] (input_restrict) -| (input_gate);
+    \path [line] (forget) -| (memory);
+    \path [line] (output_restrict) -| (output_gate);
+
+   \end{tikzpicture}
+   $\newline$
+   A particularly useful neural network when it comes to time series
+   is long short-term memory. A good way to picture how long short
+   term memory works is with the whole long short-term block as a
+   property that can save its degree of which it is true (e.g. how
+   much is some data like a letter) because it might be needed
+   later. The first node is the value of truth we might want to
+   remember, the second node can decrease it if it is such that it
+   should not effect future steps much (blocking that value from
+   entering into the next layer), the third node can forget (i.e zero
+   out) the value, and the forth node can make the value have little
+   influence when it is output (you could think of this as whether it
+   is output at all, since if it near zero it gets zero and when it is
+   near one it is the value). To avoid confusion, just because a value
+   is output from the memory cell does not necessarily mean the memory
+   cell forgets it. 
+   $\newline$
+   \begin{tikzpicture}[node distance = 3cm, text=white, auto]
+
+    % Style
+    \tikzstyle{value} = [diamond, draw, fill=black!60!yellow!100, 
+     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
+    \tikzstyle{block} = [rectangle, draw, fill=blue!100, 
+     text width=5em, text centered, rounded corners, minimum height=4em]
+    \tikzstyle{small circle} = [circle, draw, fill=red!100, 
+     minimum width=1em, text centered, rounded corners, minimum height=1em]
+    \tikzstyle{line} = [draw, -latex']
+    \tikzstyle{cloud} = [draw, ellipse,fill=black!60!green, node distance=3cm,
+     minimum height=2em]
+
+    % Place nodes
+    \node [block] (memory) {memory cell};
+    \node [small circle, left of=memory] (input_gate) {x};
+    \node [small circle, right of=memory] (output_gate) {x};
+    \node [value, left of=input_gate] (value) {value};
+    \node [cloud, below of=input_gate, node distance=1.5cm] (input_restrict) {input restriction};
+    \node [cloud, below of=memory, node distance=2cm] (forget) {forget};
+    \node [cloud, below of=output_gate, node distance=1.5cm] (output_restrict) {output restriction};
+    \coordinate[right of=output_gate] (final_result);
+
+    % Sections
+    \node [dashed, color=red, label={[text=red] to remember}, fit=(value) (input_gate) (input_restrict), draw] (input_sec) {};
+    \node [dashed, color=orange, label={[text=orange] to forget}, fit=(memory) (forget), draw] (remember_sec) {};
+    \node [dashed, color=green, label={[text=green] to recall}, fit=(output_gate) (output_restrict), draw] (output_sec) {};
+
+    % Draw edges
+    \path [line] (value) -- (input_gate) -- (memory) -- (output_gate) -- (final_result);
+    \path [line] (input_restrict) -- (input_gate);
+    \path [line] (forget) -- (memory);
+    \path [line] (output_restrict) -- (output_gate);
+
+   \end{tikzpicture}
+   $\newline$
+** So how does this relate
+   Time Naive Idea Theory has networks that are similar to standard
+   artificial neural networks, except with some important differences.
+   - One of the biggest differences between Timed Naive Idea Theory
+     networks and artificial neural networks is that properties are not
+     tied to the network's topology, but instead freely flow.
+   - Nodes might run concurrently meaning more nodes should not slow
+     the network.
 * Timed Naive Idea Theory
 <<the sum clock>>
   [[./clock.png]]
@@ -231,7 +411,8 @@
    so my *very very untested* model with have to do. The type of time
    we plan to deal with is not the time we deal with in physics
    problems, but more like the time of an internal clock telling you
-   what needs to be done.
+   what needs to be done. Time here refers to a perception of time,
+   which is just as the name implies, a perception.
 ** When is the time right?
    How do we know when it is a time to sleep, a time to eat, a time to
    cry, a time to know, a time to pretend, a time to sigh, a time to
@@ -239,7 +420,7 @@
 ** Rephrasing the problem
    Say $\mathbb{T}$ is the set of all times. So how would we map from
    this set at any given moment to a specific time? We could image a
-   12 hour clock[1] as a mapping from a subset of $\mathbb{T}$
+   12 hour clock[fn:4] as a mapping from a subset of $\mathbb{T}$
    containing twelve times to a single one of those. So what
    determines what time evaluates form this mapping? Well, time. That
    is confusing, so we will denote this time that influences the
@@ -261,7 +442,7 @@
    a member of $\mathbb{T}$ what time is in terms of
    $\mathfrak{T}$. Why would this be useful in anyway you might ask.
 ** *Some sum clocks!*
-   As the [[the sum clock][picture]] at the beginning part of Anti-clock Naive Idea
+   As the [[the sum clock][picture]] at the beginning part of clocked Naive Idea
    Theory might indicate the big idea of theory is the sum clock! The
    biggest change that we need to make is for sum clocks to take in
    an n-tuple of $\mathfrak{T}$ and for sum anti-clocks to take in an
@@ -306,40 +487,20 @@
     using threads mutexs for a given clock it should use a mutex when
     changing its own time displayed, but not when determining what
     that time should be changed to.
-** Long short-term memory
-   \begin{tikzpicture}[node distance = 3cm, text=white, auto]
-    \tikzstyle{value} = [diamond, draw, fill=black!60!yellow!100, 
-     text width=4.5em, text badly centered, node distance=3cm, inner sep=0pt]
-    \tikzstyle{block} = [rectangle, draw, fill=blue!100, 
-     text width=5em, text centered, rounded corners, minimum height=4em]
-    \tikzstyle{small circle} = [circle, draw, fill=red!100, 
-     minimum width=1em, text centered, rounded corners, minimum height=1em]
-    \tikzstyle{line} = [draw, -latex']
-    \tikzstyle{cloud} = [draw, ellipse,fill=black!60!green, node distance=3cm,
-     minimum height=2em]
-    % Place nodes
-    \node [block] (memory) {memory cell};
-    \node [small circle, left of=memory] (input_gate) {x};
-    \node [small circle, right of=memory] (output_gate) {x};
-    \node [value, left of=input_gate] (value) {value};
-    \node [cloud, below of=input_gate, node distance=1.5cm] (input_restrict) {input restriction};
-    \node [cloud, below of=memory, node distance=2cm] (forget) {forget};
-    \node [cloud, below of=output_gate, node distance=1.5cm] (output_restrict) {output restriction};
-    \coordinate[right of=output_gate] (final_result);
-    % Sections
-    \node [dashed, label={[text=gray] to remember}, fit=(value) (input_gate) (input_restrict), draw] (input_sec) {};
-    \node [dashed, label={[text=gray] to forget}, fit=(memory) (forget), draw] (remember_sec) {};
-    \node [dashed, label={[text=gray] to recall}, fit=(output_gate) (output_restrict), draw] (output_sec) {};
-    % Draw edges
-    \path [line] (value) -- (input_gate);
-    \path [line] (input_restrict) -- (input_gate);
-    \path [line] (value) -- (input_gate);
-    \path [line] (input_gate) -- (memory);
-    \path [line] (forget) -- (memory);
-    \path [line] (memory) -- (output_gate);
-    \path [line] (output_restrict) -- (output_gate);
-    \path [line] (output_gate) -- (final_result);
-   \end{tikzpicture}
+** Properties of the time
+   You may have noticed the diagrams for the sum clocks look like a
+   network of sorts. You may have also noticed that we had a section
+   prior about neural networks. This is no coincidence. In neural
+   networks node are properties and their value are degrees of
+   truth. In sum clock networks, we need to make a major change. We
+   will not just use clocks to compute a time for something (which is
+   akin to a property), but also how much it is a time for something
+   (which is like a degree of truth). Thus members of $\mathbb{T}$ are
+   pairs with properties[fn:7] like in Basic Naive Idea Theory[fn:5] and degrees
+   of truth like in artificial neural networks![fn:6]
+   $\newline$
+   $\StopWatchEnd^\prime\xrightarrow[\text{reads a time to}]{This~prime-clock}
+   (Make~connections!,0.998762356)$
 * License (GNU Free Documentation License, Version 1.3)
 
                 GNU Free Documentation License
@@ -795,8 +956,22 @@ to permit their use in free software.
 
 * Footnotes
 
-[1] 
-  I know, it tells a different definition of time then what we are
+[fn:1] Code names are tropes, it's sort of a dumb in-joke
+
+[fn:2] This is an analogy, don't take it too seriously.
+
+[fn:3] There are so many different types of neural networks these days that
+  this probably is not entirely true.
+
+[fn:4] I know, it tells a different definition of time then what we are
   working with, but pretend that instead of hours and a constant
   increment of time we are dealing with some arbitrary set of times
-  and some other mechanism for changing from one to the next.
+  and some other mechanism for changing from one to the next..
+
+[fn:5] They are not to be tied down to topology, but are object of
+  their own class!
+
+[fn:6] From now on degrees of truth will be referred to as intensities
+  due to brevity.
+
+[fn:7] These are properties of the time.
